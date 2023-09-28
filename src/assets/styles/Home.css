@@ -1,0 +1,89 @@
+/* Home.css */
+
+.content {
+    margin-bottom: 0rem; /* Puedes ajustar el valor según tus necesidades */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* Color verde suave */
+    font-family: Arial, sans-serif; /* Fuente de texto */
+}
+
+/* Estilos para las secciones */
+section {
+    background-color: #fff; /* Fondo blanco para las secciones */
+    padding: 2rem;
+    margin-bottom: 2rem; /* Espacio entre secciones */
+    border-radius: 10px; /* Bordes redondeados para las secciones */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilos para los títulos de sección */
+h2 {
+    font-size: 2rem;
+    color: #333; /* Color de texto oscuro */
+    margin-bottom: 1rem;
+}
+
+/* Estilos para los párrafos de sección */
+p {
+    margin-top: 2rem;
+    font-size: 1rem;
+    color: #666; /* Color de texto más claro */
+    line-height: 1.5;
+}
+
+/* Estilos para la sección "Características" */
+section.features {
+    text-align: center; /* Centra el contenido en la sección */
+}
+
+/* Estilos para los elementos de características */
+.features .feature {
+    flex-basis: calc(33.33% - 200px); /* Establece un ancho máximo para cada elemento (33.33% del ancho menos 20px de espacio entre elementos) */
+    margin: 10px; /* Agrega espacio entre elementos */
+}
+
+/* Estilos para los títulos dentro de características */
+.features .feature h3 {
+    margin-top: 0rem; /* Agrega espacio arriba del título */
+}
+
+/* Estilos para la sección "Características" */
+.features {
+    text-align: center;
+    /* Centra el título "Características" */
+}
+
+.features-container {
+    display: flex; /* Muestra las características en una fila */
+    justify-content: space-between; /* Espacio entre las características */
+    flex-wrap: wrap; /* Envuelve las características en una nueva línea si no caben */
+    margin-top: 3rem; /* Agrega espacio arriba de las características */
+    margin-bottom: 1rem; /* Agrega espacio abajo de las características */
+}
+
+.feature {
+    flex: 1; /* Cada característica toma el mismo ancho */
+    padding: 0; /* Espacio entre características */
+    text-align: center; /* Centra el contenido dentro de cada característica */
+}
+
+
+/* Estilos para la sección "Características" en dispositivos móviles */
+@media (max-width: 768px) {
+    .features {
+        text-align: center;
+    }
+
+    .features-container {
+        display: block; /* Cambiar a bloque para mostrar características en vertical */
+        text-align: left; /* Centrar el texto dentro de cada característica */
+    }
+
+    .feature {
+        margin-bottom: 1rem; /* Espacio entre características */
+    }
+}

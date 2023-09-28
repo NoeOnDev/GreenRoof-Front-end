@@ -1,0 +1,80 @@
+header {
+    background-color: #8DB580; /* Color verde relacionado con la naturaleza */
+    color: #fff; /* Texto en color blanco */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 2rem; /* Tamaño del título */
+    margin-left: 2rem; /* Espacio a la derecha */
+}
+
+nav {
+    display: flex;
+    gap: 2rem; /* Espacio entre botones de navegación */
+}
+
+/* Estilo para los botones de navegación */
+nav button {
+    font-size: 1rem;
+    background-color: #8DB580; /* Color verde */
+    color: #fff; /* Texto en color blanco */
+    border: none; /* Sin bordes */
+    padding: 0.5rem 1.5rem; /* Espaciado interior */
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* Cambia el color del botón al pasar el mouse sobre él */
+nav button:hover {
+    background-color: #6B974B; /* Color verde más oscuro al pasar el mouse */
+}
+
+.open-menu {
+    display: none; /* Oculta el icono de hamburguesa por defecto */
+}
+
+.close-menu {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.close-menu:hover {
+    color: #ddd;
+}
+
+@media (max-width: 768px) {
+    nav {
+        display: none;
+    }
+
+    /* Muestra el icono de hamburguesa solo en pantallas de 768px o menos */
+    .open-menu {
+        display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-right: 1rem;
+        font-size: 1.5rem;
+        color: #fff;
+    }
+
+    .show-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 4.9rem;
+        width: 100%;
+        height: 35%;
+        background: #8DB580;
+        transition: transform 0.3s;
+    }
+
+}

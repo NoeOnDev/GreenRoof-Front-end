@@ -1,0 +1,43 @@
+footer {
+    width: 100%;
+    background-color: #333;
+    text-align: center;
+
+}
+
+
+.footer-content {
+    display: flex;
+    flex-direction: column; /* Cambia la dirección del flex container a columna */
+    align-items: center; /* Centra los elementos horizontalmente */
+}
+
+.contact-info {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.contact-info p {
+    margin: 0.5rem 0;
+    color: #fff; /* Cambia el color del texto a blanco */
+}
+
+.social-icons {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    display: flex; /* Muestra los iconos en una fila */
+    align-items: center; /* Centra verticalmente los iconos */
+}
+
+.social-icons a {
+    color: #fff;
+    margin: 0 0.5rem;
+    text-decoration: none;
+}
+
+/* Estilos para los íconos */
+.social-icons img {
+    width: 35px; /* Cambia el tamaño de los iconos según sea necesario */
+    height: 35px; /* Cambia el tamaño de los iconos según sea necesario */
+}

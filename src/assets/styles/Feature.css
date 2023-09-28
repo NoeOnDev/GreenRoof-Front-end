@@ -1,0 +1,9 @@
+/* Feature.css */
+
+/* Estilos para los iconos en las características */
+.feature img {
+    width: 50px; /* Tamaño de los iconos */
+    height: 50px;
+    margin-right: 1rem; /* Espacio entre el icono y el título/descripción */
+    vertical-align: middle; /* Alinea verticalmente el icono */
+}
