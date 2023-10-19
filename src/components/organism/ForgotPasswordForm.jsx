@@ -262,7 +262,7 @@ const ForgotPasswordForm = () => {
                                 onFocus={() => setErrorMessage('')}
                                 onChange={(e) => setNewPassword(e.target.value)}
                             />
-                            <button type="button" onClick={togglePasswordVisibility}className="password-toggle">
+                            <button type="button" onClick={togglePasswordVisibility} className="password-toggle">
                                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                             </button>
                         </div>
@@ -275,7 +275,7 @@ const ForgotPasswordForm = () => {
                                 onFocus={() => setErrorMessage('')}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
-                            <button type="button" onClick={togglePasswordVisibility}className="password-toggle">
+                            <button type="button" onClick={togglePasswordVisibility} className="password-toggle">
                                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                             </button>
                         </div>

@@ -227,7 +227,7 @@ function AuthForm() {
                         <div className="input-field">
                             <i className="fas fa-lock"></i>
                             <input type={showPassword ? "text" : "password"} placeholder="Contraseña" value={password} onChange={handlePasswordChange}/>
-                            <button type="button" onClick={togglePasswordVisibility}className="password-toggle">
+                            <button type="button" onClick={togglePasswordVisibility} className="password-toggle">
                                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                             </button>
                         </div>
