@@ -20,6 +20,7 @@ const ForgotPasswordForm = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isValidEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -57,17 +58,19 @@ const ForgotPasswordForm = () => {
   };
 
   const handleSubmit = async (callbackFunction) => {
-    if (isSubmitting) {
+    if (isSubmitting || isLoading) {
       return;
     }
 
     setIsSubmitting(true);
+    setIsLoading(true);
     clearMessages();
 
     try {
       await callbackFunction();
     } finally {
       setIsSubmitting(false);
+      setIsLoading(false);
     }
   };
 
@@ -88,7 +91,7 @@ const ForgotPasswordForm = () => {
 
     await handleSubmit(async () => {
       try {
-        const response = await axios.post('https://q2gmqq0k-3000.usw3.devtunnels.ms/solicitar-cambio-contrasena', { email });
+        const response = await axios.post('http://localhost:3000/solicitar-cambio-contrasena', { email });
 
         if (response.data && response.data.error === 'Correo no verificado') {
           mostrarMensaje('error', 'El correo electrónico no está verificado. Verifica tu correo electrónico antes de solicitar un cambio de contraseña.');
@@ -121,7 +124,7 @@ const ForgotPasswordForm = () => {
 
     await handleSubmit(async () => {
       try {
-        const response = await axios.post('https://q2gmqq0k-3000.usw3.devtunnels.ms/verificar-codigo', { email, verificationCode });
+        const response = await axios.post('http://localhost:3000/verificar-codigo', { email, verificationCode });
 
         if (response.data && response.data.message === 'Código de verificación válido') {
           mostrarMensaje('success', 'Código de verificación válido.');
@@ -164,7 +167,7 @@ const ForgotPasswordForm = () => {
 
     await handleSubmit(async () => {
       try {
-        const response = await axios.post('https://q2gmqq0k-3000.usw3.devtunnels.ms/cambiar-contrasena', data);
+        const response = await axios.post('http://localhost:3000/cambiar-contrasena', data);
 
         Swal.fire('Éxito', 'Se cambió su contraseña con éxito', 'success').then(() => {
           window.location.href = '/auth';
@@ -182,6 +185,11 @@ const ForgotPasswordForm = () => {
 
   return (
     <div className="forgot-container">
+      {isLoading && (
+            <div className="loader-container">
+              <div class="loader"></div>
+            </div>
+          )}
       {step === 1 && (
         <div className="container-form-forgot">
           <form className="form-main" key={step}>
@@ -193,7 +201,7 @@ const ForgotPasswordForm = () => {
             <div className="relleno"></div>
             <div className="button-container">
               <button className="btn-cancel solid" type='button' onClick={handleCancel}>Cancelar</button>
-              <button className="btn-next solid" type="button" onClick={handleRequestCode} disabled={isSubmitting}>
+              <button className="btn-next solid" type="button" onClick={handleRequestCode} disabled={isSubmitting || isLoading}>
                 {isSubmitting ? 'Procesando...' : 'Enviar'}
               </button>
             </div>
@@ -218,7 +226,7 @@ const ForgotPasswordForm = () => {
             <div className="relleno"></div>
             <div className="button-container">
               <button className="btn-cancel solid" type='button' onClick={handleCancel}>Cancelar</button>
-              <button className="btn-next solid" type='button' onClick={handleVerifyCode} disabled={isSubmitting}>
+              <button className="btn-next solid" type='button' onClick={handleVerifyCode} disabled={isSubmitting || isLoading}>
                 {isSubmitting ? 'Procesando...' : 'Confirmar'}
               </button>
             </div>
@@ -267,7 +275,7 @@ const ForgotPasswordForm = () => {
               <button className="btn-cancel solid" type="button" onClick={handleCancel}>
                 Cancelar
               </button>
-              <button className="btn-next solid" type="button" onClick={handleChangePassword} disabled={isSubmitting}>
+              <button className="btn-next solid" type="button" onClick={handleChangePassword} disabled={isSubmitting || isLoading}>
                 {isSubmitting ? 'Cambiando...' : 'Cambiar'}
               </button>
             </div>

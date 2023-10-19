@@ -31,41 +31,39 @@ input {
     z-index: 1000; 
   }
   
-  .loader-container svg {
-    width: 3.25em;
-    transform-origin: center;
-    animation: rotate4 2s linear infinite;
+  .loader {
+    display: block;
+    --height-of-loader: 4px;
+    --loader-color: #0071e2;
+    width: 130px;
+    height: var(--height-of-loader);
+    border-radius: 30px;
+    background-color: rgba(0,0,0,0.2);
+    position: relative;
   }
   
-  .loader-container circle {
-    fill: none;
-    stroke: hsl(214, 97%, 59%);
-    stroke-width: 2;
-    stroke-dasharray: 1, 200;
-    stroke-dashoffset: 0;
-    stroke-linecap: round;
-    animation: dash4 1.5s ease-in-out infinite;
+  .loader::before {
+    content: "";
+    position: absolute;
+    background: var(--loader-color);
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    border-radius: 30px;
+    animation: moving 1s ease-in-out infinite;
+    ;
   }
   
-  @keyframes rotate4 {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @keyframes dash4 {
-    0% {
-      stroke-dasharray: 1, 200;
-      stroke-dashoffset: 0;
-    }
-  
+  @keyframes moving {
     50% {
-      stroke-dasharray: 90, 200;
-      stroke-dashoffset: -35px;
+      width: 100%;
     }
   
     100% {
-      stroke-dashoffset: -125px;
+      width: 0;
+      right: 0;
+      left: unset;
     }
   }
   

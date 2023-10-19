@@ -64,7 +64,7 @@ function AuthForm() {
       
           const formData = { email, password, recaptchaValue };
       
-          const response = await fetch('https://q2gmqq0k-3000.usw3.devtunnels.ms/login', {
+          const response = await fetch('http://localhost:3000/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ function AuthForm() {
       
           const formData = { email, username, password };
       
-          const responseRegister = await fetch('https://q2gmqq0k-3000.usw3.devtunnels.ms/register', {
+          const responseRegister = await fetch('http://localhost:3000/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -196,9 +196,7 @@ function AuthForm() {
         <div className={`container ${isSignUpMode ? 'sign-up-mode' : ''}`}>
           {isLoading && (
             <div className="loader-container">
-              <svg viewBox="25 25 50 50">
-                <circle r="20" cy="50" cx="50"></circle>
-              </svg>
+              <div class="loader"></div>
             </div>
           )}
             <div className="forms-container">
