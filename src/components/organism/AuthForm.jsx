@@ -21,6 +21,7 @@ function AuthForm() {
     const [recaptchaValue, setRecaptchaValue] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const isStrongPassword = (password) => {
@@ -40,10 +41,11 @@ function AuthForm() {
         e.preventDefault();
       
         try {
-          if (isSubmitting) {
+          if (isSubmitting || isLoading) {
             return;
-          }
-          setIsSubmitting(true);
+        }
+        setIsSubmitting(true);
+        setIsLoading(true);
       
           if (!email || !password) {
             mostrarAdvertencia('Por favor complete todos los campos');
@@ -91,6 +93,7 @@ function AuthForm() {
           mostrarAdvertencia('Ocurrió un error al enviar los datos');
         } finally {
           setIsSubmitting(false);
+          setIsLoading(false);
         }
       };
     
@@ -99,10 +102,11 @@ function AuthForm() {
         e.preventDefault();
       
         try {
-          if (isSubmitting) {
-            return;
+          if (isSubmitting || isLoading) {
+              return;
           }
           setIsSubmitting(true);
+          setIsLoading(true);
       
           if (!email || !username || !password || !confirmPassword) {
             return mostrarAdvertencia('Por favor complete todos los campos requeridos antes de registrarse');
@@ -155,7 +159,8 @@ function AuthForm() {
           mostrarAdvertencia('Ocurrió un error al enviar los datos');
         } finally {
           setIsSubmitting(false);
-        }
+          setIsLoading(false);
+      }
       };
 
 
@@ -189,6 +194,13 @@ function AuthForm() {
 
     return (
         <div className={`container ${isSignUpMode ? 'sign-up-mode' : ''}`}>
+          {isLoading && (
+            <div className="loader-container">
+              <svg viewBox="25 25 50 50">
+                <circle r="20" cy="50" cx="50"></circle>
+              </svg>
+            </div>
+          )}
             <div className="forms-container">
                 <div className="signin-signup">
 
@@ -210,7 +222,7 @@ function AuthForm() {
                             <ReCAPTCHA sitekey={config.REACT_APP_RECAPTCHA_SITEKEY} onChange={handleRecaptchaChange} />
                         </div>
 
-                        <input type="submit" className="btn" value={isSubmitting ? 'Procesando...' : 'Iniciar sesión'} disabled={isSubmitting} />
+                        <input type="submit" className="btn" value={isLoading ? 'Procesando...' : 'Iniciar Sesión'} disabled={isSubmitting || isLoading} />
                     </form>
 
 
@@ -238,11 +250,8 @@ function AuthForm() {
                             <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                             </button>
                         </div>
-                        
-                        <div className="captcha">
-
-                        </div>
-                        <input type="submit" className="btn" value={isSubmitting ? 'Procesando...' : 'Registrarse'} disabled={isSubmitting} />
+                        <div className="captcha"></div>
+                          <input type="submit" className="btn" value={isLoading ? 'Procesando...' : 'Registrarse'} disabled={isSubmitting || isLoading} />
                     </form>
                 </div>
             </div>
