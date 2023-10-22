@@ -91,7 +91,7 @@ const ForgotPasswordForm = () => {
 
     await handleSubmit(async () => {
       try {
-        const response = await axios.post('http://localhost:3000/solicitar-cambio-contrasena', { email });
+        const response = await axios.post('https://q2gmqq0k-3000.usw3.devtunnels.ms/solicitar-cambio-contrasena', { email });
 
         if (response.data && response.data.error === 'Correo no verificado') {
           mostrarMensaje('error', 'El correo electrónico no está verificado. Verifica tu correo electrónico antes de solicitar un cambio de contraseña.');
@@ -124,7 +124,7 @@ const ForgotPasswordForm = () => {
 
     await handleSubmit(async () => {
       try {
-        const response = await axios.post('http://localhost:3000/verificar-codigo', { email, verificationCode });
+        const response = await axios.post('https://q2gmqq0k-3000.usw3.devtunnels.ms/verificar-codigo', { email, verificationCode });
 
         if (response.data && response.data.message === 'Código de verificación válido') {
           mostrarMensaje('success', 'Código de verificación válido.');
@@ -167,7 +167,7 @@ const ForgotPasswordForm = () => {
 
     await handleSubmit(async () => {
       try {
-        const response = await axios.post('http://localhost:3000/cambiar-contrasena', data);
+        const response = await axios.post('https://q2gmqq0k-3000.usw3.devtunnels.ms/cambiar-contrasena', data);
 
         Swal.fire('Éxito', 'Se cambió su contraseña con éxito', 'success').then(() => {
           window.location.href = '/auth';
@@ -185,112 +185,111 @@ const ForgotPasswordForm = () => {
 
   return (
     <div className="forgot-container">
-      {isLoading && (
-            <div className="loader-container">
-              <div class="loader"></div>
-            </div>
-          )}
-      {step === 1 && (
-        <div className="container-form-forgot">
-          <form className="form-main" key={step}>
-            <h2 className="title-forgot">Solicitar cambio de contraseña</h2>
-            <div className="input-field-email">
-              <i className="fas fa-envelope"></i>
-              <input type='email' placeholder='Correo electrónico' value={email} onChange={(e) => setEmail(e.target.value)} onFocus={clearMessages}/>
-            </div>
-            <div className="relleno"></div>
-            <div className="button-container">
-              <button className="btn-cancel solid" type='button' onClick={handleCancel}>Cancelar</button>
-              <button className="btn-next solid" type="button" onClick={handleRequestCode} disabled={isSubmitting || isLoading}>
-                {isSubmitting ? 'Procesando...' : 'Enviar'}
-              </button>
-            </div>
-          </form>
-          <div className="imagen-content">
-            <div>
-              <p className="nota-par">Nota importante: se le enviará un codigo de verificación a su correo electrónico, para que pueda continuar con el proceso.</p>
-            </div>
-            <img className="noneimg" src={dog} alt="" />
-          </div>
-        </div>
-      )}
-
-      {step === 2 && (
-        <div className="container-form-forgot">
-          <form className="form-main" key={step}>
-            <h2 className="title-forgot">Confirmar código de verifiación</h2>
-            <div className="input-field-email">
-              <i className="fas fa-key"></i>
-              <input type='text' placeholder='Código de verificación' value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)}/>
-            </div>
-            <div className="relleno"></div>
-            <div className="button-container">
-              <button className="btn-cancel solid" type='button' onClick={handleCancel}>Cancelar</button>
-              <button className="btn-next solid" type='button' onClick={handleVerifyCode} disabled={isSubmitting || isLoading}>
-                {isSubmitting ? 'Procesando...' : 'Confirmar'}
-              </button>
-            </div>
-          </form>
-          <div className="imagen-content">
-            <div>
-              <p className="nota-par-2">Nota importante: introduce el codigo de verifiación que se te envio por correo electrónico.</p>
-            </div>
-            <img className="noneimg" src={dog2} alt="" />
-          </div>
-        </div>
-      )}
-
-      {step === 3 && (
-        <div className="container-form-forgot">
-          <form className="form-main" key={step}>
-            <h2 className="title-forgot">Realizar cambio de contraseña</h2>
-            <div className="input-field-email">
-              <i className="fas fa-lock"></i>
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Nueva contraseña"
-                value={newPassword}
-                onFocus={() => setErrorMessage('')}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-              <button type="button" onClick={togglePasswordVisibility} className="password-toggle">
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-              </button>
-            </div>
-            <div className="input-field-email">
-              <i className="fas fa-lock"></i>
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Confirmar contraseña"
-                value={confirmPassword}
-                onFocus={() => setErrorMessage('')}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              <button type="button" onClick={togglePasswordVisibility} className="password-toggle">
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-              </button>
-            </div>
-            <div className="relleno"></div>
-            <div className="button-container">
-              <button className="btn-cancel solid" type="button" onClick={handleCancel}>
-                Cancelar
-              </button>
-              <button className="btn-next solid" type="button" onClick={handleChangePassword} disabled={isSubmitting || isLoading}>
-                {isSubmitting ? 'Cambiando...' : 'Cambiar'}
-              </button>
-            </div>
-          </form>
-          <div className="imagen-content">
-            <div>
-              <p className="nota-par-2">
-                Nota importante: cambie su contraseña por una más segura y que pueda recordar.
-              </p>
-            </div>
-            <img className="noneimg" src={dog3} alt="" />
-          </div>
-        </div>
-      )}
+  {isLoading && (
+    <div className="loader-container">
+      <div className="loader"></div>
     </div>
+  )}
+
+  {step === 1 && (
+    <div className="container-form-forgot">
+      <form className="form-main" key={step}>
+        <h2 className="title-forgot">Solicitar cambio de contraseña</h2>
+        <div className="input-field-email">
+          <i className="fas fa-envelope"></i>
+          <input type="email" placeholder="Correo electrónico" value={email} onChange={(e) => setEmail(e.target.value)} onFocus={clearMessages} />
+        </div>
+        <div className="relleno"></div>
+        <div className="button-container">
+          <button className="btn-cancel solid" type="button" onClick={handleCancel}>Cancelar</button>
+          <button className="btn-next solid" type="button" onClick={handleRequestCode} disabled={isSubmitting || isLoading}>
+            {isSubmitting ? 'Procesando...' : 'Enviar'}
+          </button>
+        </div>
+      </form>
+      <div className="imagen-content">
+        <div>
+          <p className="nota-par">Se le enviará un código de verificación a su correo electrónico, para que pueda continuar con el proceso de cambio de contraseña.</p>
+        </div>
+        <img className="noneimg" src={dog} alt="" />
+      </div>
+    </div>
+  )}
+
+  {step === 2 && (
+    <div className="container-form-forgot">
+      <form className="form-main" key={step}>
+        <h2 className="title-forgot">Confirmar código de verificación</h2>
+        <div className="input-field-email">
+          <i className="fas fa-key"></i>
+          <input type="text" placeholder="Código de verificación" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
+        </div>
+        <div className="relleno"></div>
+        <div className="button-container">
+          <button className="btn-cancel solid" type="button" onClick={handleCancel}>Cancelar</button>
+          <button className="btn-next solid" type="button" onClick={handleVerifyCode} disabled={isSubmitting || isLoading}>
+            {isSubmitting ? 'Procesando...' : 'Confirmar'}
+          </button>
+        </div>
+      </form>
+      <div className="imagen-content">
+        <div>
+          <p className="parrafito">El código de verificación se envió al correo: {email}</p>
+        </div>
+        <img className="noneimg" src={dog2} alt="" />
+      </div>
+    </div>
+  )}
+
+  {step === 3 && (
+    <div className="container-form-forgot">
+      <form className="form-main" key={step}>
+        <h2 className="title-forgot">Realizar cambio de contraseña</h2>
+        <div className="input-field-email">
+          <i className="fas fa-lock"></i>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Nueva contraseña"
+            value={newPassword}
+            onFocus={() => setErrorMessage('')}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+          <button type="button" onClick={togglePasswordVisibility} className="password-toggle">
+            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+          </button>
+        </div>
+        <div className="input-field-email">
+          <i className="fas fa-lock"></i>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Confirmar contraseña"
+            value={confirmPassword}
+            onFocus={() => setErrorMessage('')}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <button type="button" onClick={togglePasswordVisibility} className="password-toggle">
+            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+          </button>
+        </div>
+        <div className="relleno"></div>
+        <div className="button-container">
+          <button className="btn-cancel solid" type="button" onClick={handleCancel}>
+            Cancelar
+          </button>
+          <button className="btn-next solid" type="button" onClick={handleChangePassword} disabled={isSubmitting || isLoading}>
+            {isSubmitting ? 'Cambiando...' : 'Cambiar'}
+          </button>
+        </div>
+      </form>
+      <div className="imagen-content">
+        <div>
+          <p className="parrafito">Está a punto de cambiar la contraseña de: {email}</p>
+        </div>
+        <img className="noneimg" src={dog3} alt="" />
+      </div>
+    </div>
+  )}
+</div>
   );
 };
 

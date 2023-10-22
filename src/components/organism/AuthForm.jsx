@@ -48,7 +48,7 @@ function AuthForm() {
         setIsLoading(true);
       
           if (!email || !password) {
-            mostrarAdvertencia('Por favor complete todos los campos');
+            mostrarAdvertencia('Por favor complete todos los campos requeridos antes de iniciar sesión');
             return;
           }
       
@@ -64,7 +64,7 @@ function AuthForm() {
       
           const formData = { email, password, recaptchaValue };
       
-          const response = await fetch('http://localhost:3000/login', {
+          const response = await fetch('https://q2gmqq0k-3000.usw3.devtunnels.ms/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ function AuthForm() {
       
           const formData = { email, username, password };
       
-          const responseRegister = await fetch('http://localhost:3000/register', {
+          const responseRegister = await fetch('https://q2gmqq0k-3000.usw3.devtunnels.ms/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
