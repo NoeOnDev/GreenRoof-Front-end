@@ -64,7 +64,7 @@ function AuthForm() {
       
           const formData = { email, password, recaptchaValue };
       
-          const response = await fetch('https://q2gmqq0k-3000.usw3.devtunnels.ms/login', {
+          const response = await fetch('http://localhost:3000/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ function AuthForm() {
       
           setEmail('');
           setPassword('');
-          navigate('/');
+          navigate('/dashboard');
         } catch (error) {
           console.error('Error al enviar los datos:', error);
           mostrarAdvertencia('Ocurrió un error al enviar los datos');
@@ -135,7 +135,7 @@ function AuthForm() {
       
           const formData = { email, username, password };
       
-          const responseRegister = await fetch('https://q2gmqq0k-3000.usw3.devtunnels.ms/register', {
+          const responseRegister = await fetch('http://localhost:3000/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ function AuthForm() {
                             <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                             </button>
                         </div>
-                        <div className="captcha"></div>
+              
                           <input type="submit" className="btn" value={isLoading ? 'Procesando...' : 'Registrarse'} disabled={isSubmitting || isLoading} />
                     </form>
                 </div>

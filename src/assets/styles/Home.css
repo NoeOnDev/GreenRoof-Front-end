@@ -6,6 +6,7 @@
     --backgroundColor: #ffffff;
     --darkOne: #312f3a;
     --darkTwo: #45424b;
+    --darkThree: #279ae7;
     --lightOne: #919191;
     --lightTwo: #aaa;
 }
@@ -16,6 +17,7 @@
     --backgroundColor: #192e3a;
     --darkOne: #f3f3f3;
     --darkTwo: #fff;
+    --darkThree: #ffffff;
     --lightOne: #ccc;
     --lightTwo: #e7e3e3;
 }
@@ -37,12 +39,14 @@ body button {
     overflow: hidden;
 }
 
-img {
-    width: 100%;
-}
+
 
 a {
     text-decoration: none;
+}
+
+.titulos-home{
+    font-size: 2.2rem;
 }
 
 .links button {
@@ -73,6 +77,8 @@ a {
     justify-content: space-between;
 }
 
+
+
 .home-container {
     position: relative;
     max-width: 81rem;
@@ -97,7 +103,13 @@ header .home-container {
     display: none;
 }
 
+.uil-pagelines{
+    color: var(--darkThree);
+    font-size: 35px;
+}
+
 .logo {
+    gap: 15px;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -135,16 +147,17 @@ header .home-container {
 }
 
 .home-btn {
-    padding: 0.9rem;
+    font-size: 0.9rem;
+    padding: 0.7rem;
     width: 150px;
     background-color: #5995fd;
     border: none;
     outline: none;
     height: 49px;
-    border-radius: 45px;
+    border-radius: 49px;
     color: #fff;
     text-transform: uppercase;
-    font-weight: 550;
+    font-weight: 600;
     margin: 10px 0;
     cursor: pointer;
     transition: 0.5s;
@@ -415,6 +428,10 @@ header .home-container {
 @media screen and (max-width: 470px) {
     .home-container {
         padding: 0 1.5rem;
+    }
+
+    .titulos-home{
+        font-size: 1.5rem;
     }
 
     .big-title {

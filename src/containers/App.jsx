@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home.jsx";
 import Auth from "../pages/Auth.jsx";
 import ForgotPassword from "../pages/ForgotPassword.jsx";
+import DashBoard from "../pages/DashBoard.jsx";
 
 function App() {
     return (
@@ -10,6 +11,7 @@ function App() {
                 <Route path="/" element={<Home/>} />
                 <Route path="/auth" element={<Auth/>} />
                 <Route path="/forgot" element={<ForgotPassword/>} />
+                <Route path="/dashboard" element={<DashBoard/>} />
             </Routes>
         </BrowserRouter>
     );

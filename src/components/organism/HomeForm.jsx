@@ -33,28 +33,28 @@ const HomeForm = () => {
                 <header>
                     <div className="home-container">
                         <div className="logo">
-                            <img src={logo} alt="Logo" />
+                            <i class="uil uil-pagelines"></i>
                             <h3>GreenRoof</h3>
                         </div>
 
                         <div className="links">
                             <ul>
-                                <li>
+                                <li onClick={handleHamburgerClick}>
                                     <button onClick={() => handleSectionChange('inicio')}>
                                         Inicio
                                     </button>
                                 </li>
-                                <li>
+                                <li onClick={handleHamburgerClick}>
                                     <button onClick={() => handleSectionChange('caracteristicas')}>
                                         Características
                                     </button>
                                 </li>
-                                <li>
-                                    <button onClick={() => handleSectionChange('ventajas')}>
+                                <li onClick={handleHamburgerClick}>
+                                    <button onClick={() => handleSectionChange('ventajas')} >
                                         Ventajas
                                     </button>
                                 </li>
-                                <li>
+                                <li> 
                                     <button><Link to="/auth" className="home-btn">
                                         Iniciar sesión
                                     </Link></button>
@@ -76,8 +76,8 @@ const HomeForm = () => {
                         <div className="home-container">
                             <div className="left">
                                 <div className="big-title">
-                                    <h1>Bienvenido a GreenRoof:</h1>
-                                    <h1>casas inteligentes para tu mejor amigo</h1>
+                                    <h1 className="titulos-home">Bienvenido a GreenRoof:</h1>
+                                    <h1 className="titulos-home">casas inteligentes para tu mejor amigo</h1>
                                 </div>
                                 <p className="text">
                                     En GreenRoof reinventamos las casas para perros. Nuestras casas tienen techo verde con sistema de monitoreo integrado para garantizar el bienestar de tu mascota.
@@ -100,7 +100,7 @@ const HomeForm = () => {
                         <div className="home-container">
                             <div className="left">
                                 <div className="big-title2">
-                                    <h1>Caracteristicas</h1>
+                                    <h1 className="titulos-home">Caracteristicas</h1>
                                 </div>
                             </div>
                             <div className="right">
@@ -116,7 +116,7 @@ const HomeForm = () => {
                         <div className="home-container">
                             <div className="left">
                                 <div className="big-title2">
-                                    <h1>Ventajas</h1>
+                                    <h1 className="titulos-home">Ventajas</h1>
                                 </div>
                             </div>
                             <div className="right">
