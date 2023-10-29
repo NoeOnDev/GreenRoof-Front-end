@@ -4,107 +4,148 @@ import ApexCharts from 'react-apexcharts';
 import Swal from 'sweetalert2';
 
 
+
 function DashBoardForm() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [selectedOption, setSelectedOption] = useState("Panel");
 
-  const [temperatureChartData, setTemperatureChartData] = useState({
-    series: [  
-      {
-        name: 'Temperatura (Interna)',
-        data: [27, 28, 29, 30, 31, 32, 33],
-      },
-      {
-        name: 'Temperatura (Techo)',
-        data: [33, 32, 34, 35, 36, 35, 34],
-      },
-    ],
-    options: {
-      chart: {
-        height: 350,
-        type: 'area',
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: 'smooth',
-      },
-      xaxis: {
-        type: 'datetime',
-        categories: [
-          '2018-09-19T00:00:00.000Z',
-          '2018-09-19T01:30:00.000Z',
-          '2018-09-19T02:30:00.000Z',
-          '2018-09-19T03:30:00.000Z',
-          '2018-09-19T04:30:00.000Z',
-          '2018-09-19T05:30:00.000Z',
-          '2018-09-19T06:30:00.000Z',
-        ],
-      },
-      tooltip: {
-        x: {
-          format: 'dd/MM/yy HH:mm',
-        },
-      },
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return val + ' °C';
-          },
-        },
-      },
-    },
-  });
 
-  const [humidityChartData, setHumidityChartData] = useState({
+
+  const [temperatureChartData, setTemperatureChartData] = useState({
     series: [
       {
-        name: 'Humedad (Interna)',
-        data: [40, 45, 42, 50, 55, 60, 58],
+        name: "Temperatura (Interna)", 
+        data: [25, 22, 27, 30, 31, 28, 29]
       },
       {
-        name: 'Humedad (Techo)',
-        data: [55, 60, 58, 62, 65, 60, 59],
-      },
+        name: "Temperatura (Techo)",
+        data: [33, 32, 34, 35, 36, 35, 34]  
+      }
     ],
     options: {
       chart: {
         height: 350,
-        type: 'area',
+        type: 'line',
+        dropShadow: {
+          enabled: true,
+          color: '#000',
+          top: 18,
+          left: 7,
+          blur: 10,
+          opacity: 0.2
+        },
+        toolbar: {
+          show: true,
+          tools: {
+            download: true, 
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            reset: true 
+          }
+        }
       },
+      colors: ['#ff0000', ' #ff5d00 '],
       dataLabels: {
-        enabled: false,
+        enabled: true
       },
       stroke: {
-        curve: 'smooth',
+        curve: 'smooth'
+      },
+      title: {
+        text: 'Promedio',
+        align: 'left' 
+      },
+      markers: {
+        size: 1
       },
       xaxis: {
-        type: 'datetime',
-        categories: [
-          '2018-09-19T00:00:00.000Z',
-          '2018-09-19T01:30:00.000Z',
-          '2018-09-19T02:30:00.000Z',
-          '2018-09-19T03:30:00.000Z',
-          '2018-09-19T04:30:00.000Z',
-          '2018-09-19T05:30:00.000Z',
-          '2018-09-19T06:30:00.000Z',
-        ],
-      },
-      tooltip: {
-        x: {
-          format: 'dd/MM/yy HH:mm',
-        },
+        categories: ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']
       },
       yaxis: {
-        labels: {
-          formatter: function (val) {
-            return val + ' %';
-          },
-        },
+        title: {
+          text: 'Temperatura (°C)'
+        }
       },
-    },
+      legend: {
+        position: 'bottom',
+        horizontalAlign: 'center', 
+        floating: false,
+        offsetY: 5,
+        offsetX: 0
+      }
+    }
+  });
+
+  const [humedadChartData, setHumedadChartData] = useState({
+    series: [
+      {
+        name: "Humedad (Interna)", 
+        data: [47, 61, 58, 67, 71, 74, 65]
+      },
+      {
+        name: "Humedad (Techo)",
+        data: [51, 60, 72, 64, 67, 70, 68]  
+      }
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: 'line',
+        dropShadow: {
+          enabled: true,
+          color: '#000',
+          top: 18,
+          left: 7,
+          blur: 10,
+          opacity: 0.2
+        },
+        toolbar: {
+          show: true,
+          tools: {
+            download: true,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            reset: true 
+          }
+        }
+      },
+      colors: ['#0479fe', ' #04befe '],
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      title: {
+        text: 'Promedio',
+        align: 'left' 
+      },
+      markers: {
+        size: 1
+      },
+      xaxis: {
+        categories: ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']
+      },
+      yaxis: {
+        title: {
+          text: 'Humedad (%)'
+        }
+      },
+      legend: {
+        position: 'bottom', 
+        horizontalAlign: 'center', 
+        floating: false,
+        offsetY: 5,
+        offsetX: 0
+      }
+    }
   });
 
   const handleLogout = () => {
@@ -124,6 +165,13 @@ function DashBoardForm() {
     });
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const handleOptionClick = (option) => {
+    setSelectedOption(option); 
+  };
+
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
     if (storedUsername) {
@@ -131,13 +179,6 @@ function DashBoardForm() {
     }
     setSelectedOption("Panel");
   }, []);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-  const handleOptionClick = (option) => {
-    setSelectedOption(option); 
-  };
  
   
   return (
@@ -164,7 +205,7 @@ function DashBoardForm() {
             className={selectedOption === "Graficas" ? "selected" : ""}
           >
             <i className="uil uil-chart-bar"></i>
-            <span>Graficas</span>
+            <span>Gráficas</span>
           </li>
           <li
             onClick={() => handleOptionClick("Cuenta")}
@@ -241,15 +282,15 @@ function DashBoardForm() {
           <div className="wrapper flex">
             <div className="customers">
               <div className="card-header flex">
-                <h3>Grafica Temperatura</h3>
+                <h3>Gráfica Temperatura</h3>
               </div>
               <div className="tabla-graficas">
-                <ApexCharts
-                  options={temperatureChartData.options}
-                  series={temperatureChartData.series}
-                  type="area"
-                  height={350}
-                />
+              <ApexCharts 
+              options={temperatureChartData.options}
+              series={temperatureChartData.series}
+              type="line"
+              height={350}
+            />
               </div>
             </div>
           </div>
@@ -257,15 +298,15 @@ function DashBoardForm() {
           <div className="wrapper flex">
             <div className="customers">
               <div className="card-header flex">
-                <h3>Grafica Humedad</h3>
+                <h3>Gráfica Humedad</h3>
               </div>
               <div className="tabla-graficas">
-                <ApexCharts
-                  options={humidityChartData.options}
-                  series={humidityChartData.series}
-                  type="area"
-                  height={350}
-                />
+              <ApexCharts 
+              options={humedadChartData.options}
+              series={humedadChartData.series}
+              type="line"
+              height={350}
+            />
               </div>
             </div>
           </div>

@@ -33,7 +33,7 @@ const HomeForm = () => {
                 <header>
                     <div className="home-container">
                         <div className="logo">
-                            <i class="uil uil-pagelines"></i>
+                            <i className="uil uil-pagelines"></i>
                             <h3>GreenRoof</h3>
                         </div>
 

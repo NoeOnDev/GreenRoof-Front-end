@@ -170,27 +170,27 @@ small{
 }
 
 .single-card:nth-child(1){
-  border-left: 5px solid rgb(255, 96, 22);
+  border-left: 5px solid #ff0000;
 }
 .single-card:nth-child(3){
-  border-left: 5px solid rgb(255, 96, 22);
+  border-left: 5px solid #ff5d00;
 }
 .single-card:nth-child(2){
-  border-left: 5px solid #04befe;
+  border-left: 5px solid #0479fe;
 }
 .single-card:nth-child(4){
   border-left: 5px solid #04befe;
 }
 
 .single-card:nth-child(1) span{
-  color: rgb(255, 96, 22);
+  color: #ff0000;
 }
 
 .single-card:nth-child(3) span{
-  color: rgb(255, 96, 22);
+  color: #ff5d00;
 }
 .single-card:nth-child(2) span{
-  color: #04befe;
+  color: #0479fe;
 }
 .single-card:nth-child(4) span{
   color: #04befe;

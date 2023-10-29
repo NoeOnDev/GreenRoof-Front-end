@@ -196,7 +196,7 @@ function AuthForm() {
         <div className={`container ${isSignUpMode ? 'sign-up-mode' : ''}`}>
           {isLoading && (
             <div className="loader-container">
-              <div class="loader"></div>
+              <div className="loader"></div>
             </div>
           )}
             <div className="forms-container">
