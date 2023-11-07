@@ -16,7 +16,7 @@ function AuthForm() {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState(''); // Nueva confirmación de contraseña
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [isSignUpMode, setSignUpMode] = useState(false);
     const [recaptchaValue, setRecaptchaValue] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);

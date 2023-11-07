@@ -4,10 +4,10 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import '../../assets/styles/ForgotPassword.css';
 import dog from '../../assets/img/register.svg';
 import dog2 from '../../assets/img/log.svg';
 import dog3 from '../../assets/img/person5.svg';
+import '../../assets/styles/ForgotPassword.css';
 
 const ForgotPasswordForm = () => {
   const navigate = useNavigate();

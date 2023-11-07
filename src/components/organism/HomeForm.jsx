@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/Home.css';
-import logo from '../../assets/img/logo.png';
 import shape from '../../assets/img/shape.png';
 import person from '../../assets/img/person.svg';
 import person2 from '../../assets/img/person2.svg';
-import person3 from '../../assets/img/person3.svg';
 import person4 from '../../assets/img/person4.svg';
+
 const HomeForm = () => {
     const [dark, setDark] = useState(false);
     const [section, setSection] = useState('inicio');
