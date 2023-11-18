@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
 import '../../assets/styles/Dashboard.css';
 import ApexCharts from 'react-apexcharts';
 import Swal from 'sweetalert2';
@@ -6,42 +7,30 @@ import Swal from 'sweetalert2';
 function DashBoardForm() {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [username, setUsername] = useState("");
+  const [sensorData, setSensorData] = useState([]);
+  const [dates, setDates] = useState([]);
+  const [humedadData, setHumedadData] = useState([]);
+  const [humedadDates, setHumedadDates] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Panel");
 
 
   const [temperatureChartData, setTemperatureChartData] = useState({
     series: [
       {
-        name: "Temperatura (Interna)",
-        data: [25, 22, 27, 30, 31, 28, 29]
+        name: "Temperatura Interna",
+        data: [],
       },
       {
-        name: "Temperatura (Techo)",
-        data: [33, 32, 34, 35, 36, 35, 34]
-      }
+        name: "Temperatura Techo",
+        data: [],
+      },
     ],
     options: {
-      chart: {
-        height: 350,
-        type: 'line',
-        dropShadow: {
-          enabled: true,
-          color: '#000',
-          top: 18,
-          left: 7,
-          blur: 10,
-          opacity: 0.2
+      chart: { height: 350, type: 'line',
+        dropShadow: { enabled: true, color: '#000', top: 18, left: 7, blur: 10, opacity: 0.2
         },
-        toolbar: {
-          show: true,
-          tools: {
-            download: true,
-            selection: true,
-            zoom: true,
-            zoomin: true,
-            zoomout: true,
-            pan: true,
-            reset: true
+        toolbar: { show: true,
+          tools: { download: true, selection: true, zoom: true, zoomin: true, zoomout: true, pan: true, reset: true
           }
         }
       },
@@ -53,67 +42,38 @@ function DashBoardForm() {
         curve: 'smooth'
       },
       title: {
-        text: 'Promedio',
-        align: 'left'
+        text: 'Promedio', align: 'left'
       },
       markers: {
         size: 1
       },
       xaxis: {
-        categories: ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']
+        categories: []
       },
       yaxis: {
-        title: {
-          text: 'Temperatura (°C)'
-        }
+        title: { text: 'Temperatura (°C)' }
       },
-      legend: {
-        position: 'bottom',
-        horizontalAlign: 'center',
-        floating: false,
-        offsetY: 5,
-        offsetX: 0
-      }
+      legend: { position: 'bottom', horizontalAlign: 'center', floating: false, offsetY: 5, offsetX: 0 }
     }
   });
 
   const [humedadChartData, setHumedadChartData] = useState({
     series: [
       {
-        name: "Humedad (Interna)",
-        data: [47, 61, 58, 67, 71, 74, 65]
+        name: "Humedad Interna",
+        data: [],
       },
-      {
-        name: "Humedad (Techo)",
-        data: [51, 60, 72, 64, 67, 70, 68]
-      }
     ],
     options: {
-      chart: {
-        height: 350,
-        type: 'line',
-        dropShadow: {
-          enabled: true,
-          color: '#000',
-          top: 18,
-          left: 7,
-          blur: 10,
-          opacity: 0.2
+      chart: { height: 350, type: 'line',
+        dropShadow: { enabled: true, color: '#000', top: 18, left: 7, blur: 10, opacity: 0.2
         },
-        toolbar: {
-          show: true,
-          tools: {
-            download: true,
-            selection: true,
-            zoom: true,
-            zoomin: true,
-            zoomout: true,
-            pan: true,
-            reset: true
+        toolbar: { show: true,
+          tools: { download: true, selection: true, zoom: true, zoomin: true, zoomout: true, pan: true, reset: true
           }
         }
       },
-      colors: ['#0479fe', ' #04befe '],
+      colors: ['#0479fe'],
       dataLabels: {
         enabled: true
       },
@@ -121,27 +81,20 @@ function DashBoardForm() {
         curve: 'smooth'
       },
       title: {
-        text: 'Promedio',
-        align: 'left'
+        text: 'Promedio', align: 'left'
       },
       markers: {
         size: 1
       },
       xaxis: {
-        categories: ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do']
+        categories: []
       },
       yaxis: {
         title: {
           text: 'Humedad (%)'
         }
       },
-      legend: {
-        position: 'bottom',
-        horizontalAlign: 'center',
-        floating: false,
-        offsetY: 5,
-        offsetX: 0
-      }
+      legend: { position: 'bottom', horizontalAlign: 'center', floating: false, offsetY: 5, offsetX: 0 }
     }
   });
 
@@ -179,6 +132,70 @@ function DashBoardForm() {
     setSelectedOption("Panel");
   }, []);
 
+  useEffect(() => {
+    const socket = io('localhost:5000', {
+      transports: ['websocket'],
+    });
+
+    socket.on('sensorData', (data) => {
+      setSensorData((prevData) => [...prevData, data]);
+      setDates((prevDates) => [...prevDates, data.fecha_registro]);
+      setHumedadData((prevHumedadData) => [...prevHumedadData, data.humedad_dht]);
+      setHumedadDates((prevHumedadDates) => [...prevHumedadDates, data.fecha_registro]);
+    });
+
+    return () => socket.disconnect();
+  }, []);
+
+  const maxDataPoints = 7;
+
+  useEffect(() => {
+    if (sensorData.length > 0) {
+      setTemperatureChartData((prevChartData) => {
+        const newTemperatureData = {
+          series: [
+            {
+              name: "Temperatura (Interna)",
+              data: sensorData.slice(-maxDataPoints).map((data) => data.temperatura_dht),
+            },
+            {
+              name: "Temperatura (Techo)",
+              data: sensorData.slice(-maxDataPoints).map((data) => data.temperatura_exterior),
+            },
+          ],
+          options: {
+            ...prevChartData.options,
+            xaxis: {
+              categories: dates.slice(-maxDataPoints),
+            },
+          },
+        };
+        return newTemperatureData;
+      });
+    }
+  }, [sensorData, dates, maxDataPoints]);
+
+  useEffect(() => {
+    if (humedadData.length > 0) {
+      setHumedadChartData((prevChartData) => {
+        const newHumedadData = {
+          series: [
+            {
+              name: "Humedad (Interna)",
+              data: humedadData.slice(-maxDataPoints),
+            },
+          ],
+          options: {
+            ...prevChartData.options,
+            xaxis: {
+              categories: humedadDates.slice(-maxDataPoints),
+            },
+          },
+        };
+        return newHumedadData;
+      });
+    }
+  }, [humedadData, humedadDates, maxDataPoints]);
 
   return (
       <div>
@@ -212,6 +229,13 @@ function DashBoardForm() {
               >
                 <i className="uil uil-user-circle"></i>
                 <span>Cuenta</span>
+              </li>
+              <li
+                  onClick={() => handleOptionClick("Historial")}
+                  className={selectedOption === "Historial" ? "selected" : ""}
+              >
+                <i className="uil uil-history"></i>
+                <span>Historial</span>
               </li>
               <li onClick={handleLogout}>
                 <i className="uil uil-signin"></i>
@@ -250,29 +274,30 @@ function DashBoardForm() {
               <div className="single-card">
                 <div>
                   <span>TEMPERATURA (INTERNA)</span>
-                  <h2>27 ºC</h2>
+                  <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].temperatura_dht} ºC` : 'Cargando...'}</h2>
                 </div>
                 <i className="uil uil-temperature-three-quarter"></i>
               </div>
               <div className="single-card">
                 <div>
                   <span>HUMEDAD (INTERNA)</span>
-                  <h2>67 %</h2>
+                  <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].humedad_dht} %` : 'Cargando...'}</h2>
                 </div>
                 <i className="uil uil-tear"></i>
               </div>
               <div className="single-card">
                 <div>
                   <span>TEMPERATURA (TECHO)</span>
-                  <h2>34 ºC</h2>
+                  <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].temperatura_exterior} ºC` : 'Cargando...'}</h2>
                 </div>
+
                 <i className="uil uil-temperature-three-quarter"></i>
               </div>
 
               <div className="single-card">
                 <div>
                   <span>HUMEDAD (TECHO)</span>
-                  <h2>49 %</h2>
+                  <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].estado_suelo} ` : 'Cargando...'}</h2>
                 </div>
                 <i className="uil uil-tear"></i>
               </div>
@@ -288,7 +313,7 @@ function DashBoardForm() {
                       options={temperatureChartData.options}
                       series={temperatureChartData.series}
                       type="line"
-                      height={450}
+                      height={400}
                   />
                 </div>
               </div>
@@ -304,18 +329,15 @@ function DashBoardForm() {
                       options={humedadChartData.options}
                       series={humedadChartData.series}
                       type="line"
-                      height={450}
+                      height={400}
                   />
                 </div>
               </div>
             </div>
-            {/*Aqui un titulo de GRAFICAS Y ME MUESTRE MAS GRAFICAS PERO SERÍA OTRA SECCION, PERO NO ES LO MISMO QUE UN STEP*/}
-
           </div>
         </div>
       </div>
   );
-
 }
 
 export default DashBoardForm;
