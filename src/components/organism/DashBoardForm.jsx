@@ -3,6 +3,8 @@ import { io } from 'socket.io-client';
 import '../../assets/styles/Dashboard.css';
 import ApexCharts from 'react-apexcharts';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+
 
 function DashBoardForm() {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
@@ -11,6 +13,7 @@ function DashBoardForm() {
   const [dates, setDates] = useState([]);
   const [humedadData, setHumedadData] = useState([]);
   const [humedadDates, setHumedadDates] = useState([]);
+  const [historicalData, setHistoricalData] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Panel");
 
 
@@ -112,17 +115,35 @@ function DashBoardForm() {
       if (result.isConfirmed) {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
-        window.location.href = '/auth';
+        window.location.href = '/';
       }
     });
   };
+  
 
+  const fetchHistoricalData = async () => {
+    try {
+      const response = await axios.get('https://q2gmqq0k-5000.usw3.devtunnels.ms/sensores');
+      setHistoricalData((prevData) => [...response.data, ...prevData.slice(0, 100 - response.data.length)]);
+    } catch (error) {
+      console.error('Error al obtener datos históricos:', error.message);
+    }
+  };
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   const handleOptionClick = (option) => {
     setSelectedOption(option);
+    if (option === "Historial") {
+      fetchHistoricalData();
+    }
   };
+
+  useEffect(() => {
+    fetchHistoricalData();
+  }, []);
+  
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
@@ -133,17 +154,18 @@ function DashBoardForm() {
   }, []);
 
   useEffect(() => {
-    const socket = io('localhost:5000', {
+    const socket = io('q2gmqq0k-5000.usw3.devtunnels.ms', {
       transports: ['websocket'],
     });
-
+  
     socket.on('sensorData', (data) => {
       setSensorData((prevData) => [...prevData, data]);
       setDates((prevDates) => [...prevDates, data.fecha_registro]);
       setHumedadData((prevHumedadData) => [...prevHumedadData, data.humedad_dht]);
       setHumedadDates((prevHumedadDates) => [...prevHumedadDates, data.fecha_registro]);
+      setHistoricalData((prevData) => [data, ...prevData.slice(0, 100 - 1)]);
     });
-
+  
     return () => socket.disconnect();
   }, []);
 
@@ -239,7 +261,7 @@ function DashBoardForm() {
               </li>
               <li onClick={handleLogout}>
                 <i className="uil uil-signin"></i>
-                <button className="span2" >Cerrar sesión</button>
+                <button className="span2" >Salir</button>
               </li>
             </ul>
           </div>
@@ -268,73 +290,121 @@ function DashBoardForm() {
               </div>
             </div>
           </div>
+          
+        {selectedOption === "Panel" && (
+          <div>
+            <div className="contenedor-dash">
+              <div className="cards">
+                <div className="single-card">
+                  <div>
+                    <span>TEMPERATURA (INTERNA)</span>
+                    <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].temperatura_dht} ºC` : 'Cargando...'}</h2>
+                  </div>
+                  <i className="uil uil-temperature-three-quarter"></i>
+                </div>
+                <div className="single-card">
+                  <div>
+                    <span>HUMEDAD (INTERNA)</span>
+                    <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].humedad_dht} %` : 'Cargando...'}</h2>
+                  </div>
+                  <i className="uil uil-tear"></i>
+                </div>
+                <div className="single-card">
+                  <div>
+                    <span>TEMPERATURA (TECHO)</span>
+                    <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].temperatura_exterior} ºC` : 'Cargando...'}</h2>
+                  </div>
 
-          <div className="contenedor-dash">
-            <div className="cards">
-              <div className="single-card">
-                <div>
-                  <span>TEMPERATURA (INTERNA)</span>
-                  <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].temperatura_dht} ºC` : 'Cargando...'}</h2>
-                </div>
-                <i className="uil uil-temperature-three-quarter"></i>
-              </div>
-              <div className="single-card">
-                <div>
-                  <span>HUMEDAD (INTERNA)</span>
-                  <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].humedad_dht} %` : 'Cargando...'}</h2>
-                </div>
-                <i className="uil uil-tear"></i>
-              </div>
-              <div className="single-card">
-                <div>
-                  <span>TEMPERATURA (TECHO)</span>
-                  <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].temperatura_exterior} ºC` : 'Cargando...'}</h2>
+                  <i className="uil uil-temperature-three-quarter"></i>
                 </div>
 
-                <i className="uil uil-temperature-three-quarter"></i>
-              </div>
-
-              <div className="single-card">
-                <div>
-                  <span>HUMEDAD (TECHO)</span>
-                  <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].estado_suelo} ` : 'Cargando...'}</h2>
-                </div>
-                <i className="uil uil-tear"></i>
-              </div>
-            </div>
-
-            <div className="wrapper flex">
-              <div className="customers">
-                <div className="card-header flex">
-                  <h3>Gráfica Temperatura</h3>
-                </div>
-                <div className="tabla-graficas">
-                  <ApexCharts
-                      options={temperatureChartData.options}
-                      series={temperatureChartData.series}
-                      type="line"
-                      height={400}
-                  />
+                <div className="single-card">
+                  <div>
+                    <span>HUMEDAD (TECHO)</span>
+                    <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].estado_suelo} ` : 'Cargando...'}</h2>
+                  </div>
+                  <i className="uil uil-tear"></i>
                 </div>
               </div>
-            </div>
 
-            <div className="wrapper flex">
-              <div className="customers">
-                <div className="card-header flex">
-                  <h3>Gráfica Humedad</h3>
+              <div className="wrapper flex">
+                <div className="customers">
+                  <div className="card-header flex">
+                    <h3>Gráfica Temperatura</h3>
+                  </div>
+                  <div className="tabla-graficas">
+                    <ApexCharts
+                        options={temperatureChartData.options}
+                        series={temperatureChartData.series}
+                        type="line"
+                        height={400}
+                    />
+                  </div>
                 </div>
-                <div className="tabla-graficas">
-                  <ApexCharts
-                      options={humedadChartData.options}
-                      series={humedadChartData.series}
-                      type="line"
-                      height={400}
-                  />
+              </div>
+
+              <div className="wrapper flex">
+                <div className="customers">
+                  <div className="card-header flex">
+                    <h3>Gráfica Humedad</h3>
+                  </div>
+                  <div className="tabla-graficas">
+                    <ApexCharts
+                        options={humedadChartData.options}
+                        series={humedadChartData.series}
+                        type="line"
+                        height={400}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        )}
+
+        {selectedOption === "Graficas" && (
+          <div>
+            <h1>Gráficas</h1>
+            
+          </div>
+        )}
+
+        {selectedOption === "Cuenta" && (
+          <div>
+            <h1>Cuenta</h1>
+            
+          </div>
+        )}
+
+        {selectedOption === "Historial" && (
+          <div>
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Fecha Registro</th>
+                    <th>Temperatura (Interna)</th>
+                    <th>Humedad (Interna)</th>
+                    <th>Temperatura (Techo)</th>
+                    <th>Estado del Suelo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {historicalData.map((data, index) => (
+                    <tr key={index}>
+                      <td>{data.fecha_registro}</td>
+                      <td>{typeof data.temperatura_dht === 'number' ? data.temperatura_dht.toFixed(2) + ' ºC' : data.temperatura_dht + ' ºC'}</td>
+                      <td>{typeof data.humedad_dht === 'number' ? data.humedad_dht.toFixed(2) + ' %' : data.humedad_dht + ' %'}</td>
+                      <td>{typeof data.temperatura_exterior === 'number' ? data.temperatura_exterior.toFixed(2) + ' ºC' : data.temperatura_exterior + ' ºC'}</td>
+                      <td>{data.estado_suelo}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+          
         </div>
       </div>
   );
