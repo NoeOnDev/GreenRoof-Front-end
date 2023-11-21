@@ -39,16 +39,13 @@ function DashBoardForm() {
       },
       colors: ['#ff0000', ' #ff5d00 '],
       dataLabels: {
-        enabled: true
+        enabled: false
       },
       stroke: {
-        curve: 'smooth'
+        curve: 'straight'
       },
       title: {
         text: 'Promedio', align: 'left'
-      },
-      markers: {
-        size: 1
       },
       xaxis: {
         categories: []
@@ -101,26 +98,6 @@ function DashBoardForm() {
     }
   });
 
-  const handleLogout = () => {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: '¿Quieres cerrar sesión?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, cerrar sesión',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        window.location.href = '/';
-      }
-    });
-  };
-  
-
   const fetchHistoricalData = async () => {
     try {
       const response = await axios.get('https://q2gmqq0k-5000.usw3.devtunnels.ms/sensores');
@@ -130,29 +107,12 @@ function DashBoardForm() {
     }
   };
   
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    if (option === "Historial") {
-      fetchHistoricalData();
-    }
-  };
-
   useEffect(() => {
     fetchHistoricalData();
   }, []);
   
 
-  useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
-    setSelectedOption("Panel");
-  }, []);
-
+  
   useEffect(() => {
     const socket = io('q2gmqq0k-5000.usw3.devtunnels.ms', {
       transports: ['websocket'],
@@ -169,6 +129,7 @@ function DashBoardForm() {
     return () => socket.disconnect();
   }, []);
 
+
   const maxDataPoints = 7;
 
   useEffect(() => {
@@ -176,14 +137,8 @@ function DashBoardForm() {
       setTemperatureChartData((prevChartData) => {
         const newTemperatureData = {
           series: [
-            {
-              name: "Temperatura (Interna)",
-              data: sensorData.slice(-maxDataPoints).map((data) => data.temperatura_dht),
-            },
-            {
-              name: "Temperatura (Techo)",
-              data: sensorData.slice(-maxDataPoints).map((data) => data.temperatura_exterior),
-            },
+            { name: "Temperatura (Interna)", data: sensorData.slice(-maxDataPoints).map((data) => data.temperatura_dht), },
+            { name: "Temperatura (Techo)", data: sensorData.slice(-maxDataPoints).map((data) => data.temperatura_exterior), },
           ],
           options: {
             ...prevChartData.options,
@@ -202,10 +157,7 @@ function DashBoardForm() {
       setHumedadChartData((prevChartData) => {
         const newHumedadData = {
           series: [
-            {
-              name: "Humedad (Interna)",
-              data: humedadData.slice(-maxDataPoints),
-            },
+            { name: "Humedad (Interna)", data: humedadData.slice(-maxDataPoints), },
           ],
           options: {
             ...prevChartData.options,
@@ -218,6 +170,44 @@ function DashBoardForm() {
       });
     }
   }, [humedadData, humedadDates, maxDataPoints]);
+
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+    setSelectedOption("Panel");
+  }, []);
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres cerrar sesión?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cerrar sesión',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        window.location.href = '/';
+      }
+    });
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    if (option === "Historial") {
+      fetchHistoricalData();
+    }
+  };
 
   return (
       <div>
