@@ -105,16 +105,9 @@ function DashBoardForm() {
   });
 
   useEffect(() => {
-    const fetchMediaData = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/media-sensores');
-        setMediaData(response.data);
-      } catch (error) {
-        console.error('Error al obtener datos de media:', error.message);
-      }
-    };
+    
 
-    fetchMediaData();
+    
 
     const socket = io('localhost:5000', {
       transports: ['websocket'],
@@ -126,7 +119,18 @@ function DashBoardForm() {
 
     return () => socket.disconnect();
   }, []);
-  
+  const fetchMediaData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/media-sensores');
+      setMediaData(response.data);
+    } catch (error) {
+      console.error('Error al obtener datos de media:', error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchMediaData();
+  }, []);
 
   const fetchHistoricalData = async () => {
     try {
@@ -236,6 +240,9 @@ function DashBoardForm() {
     if (option === "Historial") {
       fetchHistoricalData();
     }
+    if (option== "Panel") {
+      fetchMediaData();
+    }
   };
 
   return (
@@ -263,13 +270,6 @@ function DashBoardForm() {
               >
                 <i className="uil uil-chart-bar"></i>
                 <span>Gráficas</span>
-              </li>
-              <li
-                  onClick={() => handleOptionClick("Cuenta")}
-                  className={selectedOption === "Cuenta" ? "selected" : ""}
-              >
-                <i className="uil uil-user-circle"></i>
-                <span>Cuenta</span>
               </li>
               <li
                   onClick={() => handleOptionClick("Historial")}
