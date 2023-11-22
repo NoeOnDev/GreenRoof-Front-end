@@ -45,7 +45,7 @@ function DashBoardForm() {
         curve: 'straight'
       },
       title: {
-        text: 'Promedio', align: 'left'
+        text: 'Datos', align: 'left'
       },
       xaxis: {
         categories: []
@@ -75,16 +75,13 @@ function DashBoardForm() {
       },
       colors: ['#0479fe'],
       dataLabels: {
-        enabled: true
+        enabled: false
       },
       stroke: {
-        curve: 'smooth'
+        curve: 'straight'
       },
       title: {
-        text: 'Promedio', align: 'left'
-      },
-      markers: {
-        size: 1
+        text: 'Datos', align: 'left'
       },
       xaxis: {
         categories: []
@@ -104,27 +101,20 @@ function DashBoardForm() {
     mediaTemperaturaExterior: null,
   });
 
-  useEffect(() => {
-    
-
-    
-
-    const socket = io('localhost:5000', {
-      transports: ['websocket'],
-    });
-
-    socket.on('mediaData', (data) => {
-      setMediaData(data);
-    });
-
-    return () => socket.disconnect();
-  }, []);
   const fetchMediaData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/media-sensores');
+      const token = localStorage.getItem('token');
+  
+      const response = await axios.get('http://localhost:5000/media-sensores', {
+        headers: {
+          Authorization: `Bearer ${token}`  
+        }
+      });
+  
       setMediaData(response.data);
+  
     } catch (error) {
-      console.error('Error al obtener datos de media:', error.message);
+      console.error('Error al obtener datos de media:', error);
     }
   };
 
@@ -133,11 +123,19 @@ function DashBoardForm() {
   }, []);
 
   const fetchHistoricalData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/sensores');
-      setHistoricalData((prevData) => [...response.data, ...prevData.slice(0, 100 - response.data.length)]);
+    try { 
+      const token = localStorage.getItem('token');
+  
+      const response = await axios.get('http://localhost:5000/sensores', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      setHistoricalData(prevData => [...response.data, ...prevData.slice(0, 100 - response.data.length)]);
+    
     } catch (error) {
-      console.error('Error al obtener datos históricos:', error.message);
+      console.error('Error al obtener datos históricos:', error);
     }
   };
   
@@ -163,7 +161,7 @@ function DashBoardForm() {
   }, []);
 
 
-  const maxDataPoints = 7;
+  const maxDataPoints = 10;
 
   useEffect(() => {
     if (sensorData.length > 0) {
