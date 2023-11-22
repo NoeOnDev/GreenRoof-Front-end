@@ -64,7 +64,7 @@ function AuthForm() {
       
           const formData = { email, password, recaptchaValue };
       
-          const response = await fetch('https://q2gmqq0k-5000.usw3.devtunnels.ms/login', {
+          const response = await fetch('http://localhost:5000/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ function AuthForm() {
       
           const formData = { email, username, password };
       
-          const responseRegister = await fetch('https://q2gmqq0k-5000.usw3.devtunnels.ms/register', {
+          const responseRegister = await fetch('http://localhost:5000/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

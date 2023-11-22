@@ -225,8 +225,7 @@ small{
 }
 
 .wrapper{
-  
-  margin-top: 50px;
+  margin-top: 2rem;
   flex-wrap: wrap;
   align-items: flex-start;
 }
@@ -248,7 +247,7 @@ small{
 }
 
 .tabla-graficas{
-   width: 100%;
+  width: 100%;
   height: 100%;
   padding: 15px 20px;
   font-size: 15px;
@@ -256,7 +255,11 @@ small{
 
 }
 
-
+.graficas-t{
+  align-items: center;
+  text-align: center;
+  margin: 2.5rem;
+}
 
 .status-box{
   display: flex;

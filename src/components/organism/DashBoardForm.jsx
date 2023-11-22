@@ -98,9 +98,39 @@ function DashBoardForm() {
     }
   });
 
+  const [mediaData, setMediaData] = useState({
+    mediaTemperatura: null,
+    mediaHumedad: null,
+    mediaTemperaturaExterior: null,
+  });
+
+  useEffect(() => {
+    const fetchMediaData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/media-sensores');
+        setMediaData(response.data);
+      } catch (error) {
+        console.error('Error al obtener datos de media:', error.message);
+      }
+    };
+
+    fetchMediaData();
+
+    const socket = io('localhost:5000', {
+      transports: ['websocket'],
+    });
+
+    socket.on('mediaData', (data) => {
+      setMediaData(data);
+    });
+
+    return () => socket.disconnect();
+  }, []);
+  
+
   const fetchHistoricalData = async () => {
     try {
-      const response = await axios.get('https://q2gmqq0k-5000.usw3.devtunnels.ms/sensores');
+      const response = await axios.get('http://localhost:5000/sensores');
       setHistoricalData((prevData) => [...response.data, ...prevData.slice(0, 100 - response.data.length)]);
     } catch (error) {
       console.error('Error al obtener datos históricos:', error.message);
@@ -111,10 +141,9 @@ function DashBoardForm() {
     fetchHistoricalData();
   }, []);
   
-
   
   useEffect(() => {
-    const socket = io('q2gmqq0k-5000.usw3.devtunnels.ms', {
+    const socket = io('localhost:5000', {
       transports: ['websocket'],
     });
   
@@ -307,7 +336,7 @@ function DashBoardForm() {
 
                   <i className="uil uil-temperature-three-quarter"></i>
                 </div>
-
+    
                 <div className="single-card">
                   <div>
                     <span>HUMEDAD (TECHO)</span>
@@ -316,8 +345,46 @@ function DashBoardForm() {
                   <i className="uil uil-tear"></i>
                 </div>
               </div>
+              <div className="graficas-t">
+        <h2>Media de todos los datos</h2>
+      </div>
+      <div className="cards">
+        <div className="single-card">
+          <div>
+            <span>TEMPERATURA (INTERNA)</span>
+            <h2>{mediaData.mediaTemperatura !== null ? `${mediaData.mediaTemperatura} ºC` : 'Cargando...'}</h2>
+          </div>
+          <i className="uil uil-temperature-three-quarter"></i>
+        </div>
+        <div className="single-card">
+          <div>
+            <span>HUMEDAD (INTERNA)</span>
+            <h2>{mediaData.mediaHumedad !== null ? `${mediaData.mediaHumedad} %` : 'Cargando...'}</h2>
+          </div>
+          <i className="uil uil-tear"></i>
+        </div>
+        <div className="single-card">
+          <div>
+            <span>TEMPERATURA (TECHO)</span>
+            <h2>{mediaData.mediaTemperaturaExterior !== null ? `${mediaData.mediaTemperaturaExterior} ºC` : 'Cargando...'}</h2>
+          </div>
+          <i className="uil uil-temperature-three-quarter"></i>
+        </div>
+        <div className="single-card">
+          <div>
+            <span>HUMEDAD (TECHO)</span>
+            <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].estado_suelo} ` : 'Cargando...'}</h2>
+          </div>
+          <i className="uil uil-tear"></i>
+        </div>
+      </div>
+    </div>
+          </div>
+        )}
 
-              <div className="wrapper flex">
+        {selectedOption === "Graficas" && (
+          <div>
+            <div className="wrapper flex">
                 <div className="customers">
                   <div className="card-header flex">
                     <h3>Gráfica Temperatura</h3>
@@ -327,7 +394,7 @@ function DashBoardForm() {
                         options={temperatureChartData.options}
                         series={temperatureChartData.series}
                         type="line"
-                        height={400}
+                        height={350}
                     />
                   </div>
                 </div>
@@ -343,19 +410,11 @@ function DashBoardForm() {
                         options={humedadChartData.options}
                         series={humedadChartData.series}
                         type="line"
-                        height={400}
+                        height={350}
                     />
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-
-        {selectedOption === "Graficas" && (
-          <div>
-            <h1>Gráficas</h1>
-            
           </div>
         )}
 
