@@ -64,7 +64,7 @@ function AuthForm() {
       
           const formData = { email, password, recaptchaValue };
       
-          const response = await fetch('https://back-end-greenroof.kmonito.com/login', {
+          const response = await fetch('https://greenroof-api.kmonito.com:443/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ function AuthForm() {
       
           const formData = { email, username, password };
       
-          const responseRegister = await fetch('https://back-end-greenroof.kmonito.com/register', {
+          const responseRegister = await fetch('https://greenroof-api.kmonito.com:443/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

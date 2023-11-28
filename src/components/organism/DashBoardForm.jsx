@@ -105,7 +105,7 @@ function DashBoardForm() {
     try {
       const token = localStorage.getItem('token');
   
-      const response = await axios.get('https://back-end-greenroof.kmonito.com/media-sensores', {
+      const response = await axios.get('https://greenroof-api.kmonito.com:443/media-sensores', {
         headers: {
           Authorization: `Bearer ${token}`  
         }
@@ -126,7 +126,7 @@ function DashBoardForm() {
     try { 
       const token = localStorage.getItem('token');
   
-      const response = await axios.get('https://back-end-greenroof.kmonito.com/sensores', {
+      const response = await axios.get('https://greenroof-api.kmonito.com:443/sensores', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -145,7 +145,7 @@ function DashBoardForm() {
   
   
   useEffect(() => {
-    const socket = io('back-end-greenroof.kmonito.com:5000', {
+    const socket = io('https://greenroof-api.kmonito.com:443', {
       transports: ['websocket'],
     });
   

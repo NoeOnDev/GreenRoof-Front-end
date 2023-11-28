@@ -91,7 +91,7 @@ const ForgotPasswordForm = () => {
 
     await handleSubmit(async () => {
       try {
-        const response = await axios.post('https://back-end-greenroof.kmonito.com/solicitar-cambio-contrasena', { email });
+        const response = await axios.post('https://greenroof-api.kmonito.com:443/solicitar-cambio-contrasena', { email });
 
         if (response.data && response.data.error === 'Correo no verificado') {
           mostrarMensaje('error', 'El correo electrónico no está verificado. Verifica tu correo electrónico antes de solicitar un cambio de contraseña.');
@@ -124,7 +124,7 @@ const ForgotPasswordForm = () => {
 
     await handleSubmit(async () => {
       try {
-        const response = await axios.post('https://back-end-greenroof.kmonito.com/verificar-codigo', { email, verificationCode });
+        const response = await axios.post('https://greenroof-api.kmonito.com:443/verificar-codigo', { email, verificationCode });
 
         if (response.data && response.data.message === 'Código de verificación válido') {
           mostrarMensaje('success', 'Código de verificación válido.');
@@ -167,7 +167,7 @@ const ForgotPasswordForm = () => {
 
     await handleSubmit(async () => {
       try {
-        const response = await axios.post('https://back-end-greenroof.kmonito.com/cambiar-contrasena', data);
+        const response = await axios.post('https://greenroof-api.kmonito.com:443/cambiar-contrasena', data);
 
         Swal.fire('Éxito', 'Se cambió su contraseña con éxito', 'success').then(() => {
           window.location.href = '/auth';
