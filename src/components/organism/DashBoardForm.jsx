@@ -97,9 +97,18 @@ function DashBoardForm() {
 
   const [mediaData, setMediaData] = useState({
     mediaTemperatura: null,
+    desviacionTemperatura: null,
+    probabilidadTemperaturaAlta: null,
+    probabilidadTemperaturaBaja: null,
     mediaHumedad: null,
+    desviacionHumedad: null,
+    probabilidadHumedadAlta: null,
+    probabilidadHumedadBaja: null,
     mediaTemperaturaExterior: null,
+    desviacionTemperaturaExterior: null,
+    probabilidadTemperaturaExternaAlta: null,
   });
+  
 
   const fetchMediaData = async () => {
     try {
@@ -344,7 +353,7 @@ function DashBoardForm() {
                 </div>
               </div>
               <div className="graficas-t">
-        <h2>Media de todos los datos</h2>
+        <h2>MEDIA DE TODOS LOS DATOS</h2>
       </div>
       <div className="cards">
         <div className="single-card">
@@ -376,7 +385,76 @@ function DashBoardForm() {
           <i className="uil uil-tear"></i>
         </div>
       </div>
+      <div className="graficas-t">
+  <h2>DESVIACIÓN ESTÁNDAR DE TODOS LOS DATOS</h2>
+</div>
+<div className="cards">
+  <div className="single-card">
+    <div>
+      <span>TEMPERATURA (INTERNA)</span>
+      <h2>{mediaData.desviacionTemperatura !== null ? `${mediaData.desviacionTemperatura} ºC` : 'Cargando...'}</h2>
     </div>
+    <i className="uil uil-temperature-three-quarter"></i>
+  </div>
+  <div className="single-card">
+    <div>
+      <span>HUMEDAD (INTERNA)</span>
+      <h2>{mediaData.desviacionHumedad !== null ? `${mediaData.desviacionHumedad} %` : 'Cargando...'}</h2>
+    </div>
+    <i className="uil uil-tear"></i>
+  </div>
+  <div className="single-card">
+    <div>
+      <span>TEMPERATURA (TECHO)</span>
+      <h2>{mediaData.desviacionTemperaturaExterior !== null ? `${mediaData.desviacionTemperaturaExterior} ºC` : 'Cargando...'}</h2>
+    </div>
+    <i className="uil uil-temperature-three-quarter"></i>
+  </div>
+  <div className="single-card">
+    <div>
+      <span>HUMEDAD (TECHO)</span>
+      <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].estado_suelo} ` : 'Cargando...'}</h2>
+    </div>
+    <i className="uil uil-tear"></i>
+  </div>
+</div>
+<div className="graficas-t">
+  <h2>PROBABILIDAD DE TEMPERATURA Y HUMEDAD ALTA</h2>
+</div>
+<div className="cards">
+  <div className="single-card">
+    <div>
+      <span>TEMPERATURA (INTERNA)</span>
+      <h2>{mediaData.probabilidadTemperaturaAlta !== null ? `${(parseFloat(mediaData.probabilidadTemperaturaAlta) * 100).toFixed(2)}%` : 'Cargando...'}</h2>
+    </div>
+    <i className="uil uil-temperature-three-quarter"></i>
+  </div>
+  <div className="single-card">
+    <div>
+      <span>HUMEDAD (INTERNA)</span>
+      <h2>{mediaData.probabilidadHumedadAlta !== null ? `${(parseFloat(mediaData.probabilidadHumedadAlta) * 100).toFixed(2)}%` : 'Cargando...'}</h2>
+    </div>
+    <i className="uil uil-tear"></i>
+  </div>
+  <div className="single-card">
+    <div>
+      <span>TEMPERATURA (TECHO)</span>
+      <h2>{mediaData.probabilidadTemperaturaExternaAlta !== null ? `${(parseFloat(mediaData.probabilidadTemperaturaExternaAlta) * 100).toFixed(2)}%` : 'Cargando...'}</h2>
+    </div>
+    <i className="uil uil-temperature-three-quarter"></i>
+  </div>
+  <div className="single-card">
+    <div>
+      <span>HUMEDAD (TECHO)</span>
+      <h2>{sensorData.length > 0 ? `${sensorData[sensorData.length - 1].estado_suelo} ` : 'Cargando...'}</h2>
+    </div>
+    <i className="uil uil-tear"></i>
+  </div>
+</div>
+
+
+    </div>
+    
           </div>
         )}
 

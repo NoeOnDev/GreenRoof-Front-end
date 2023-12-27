@@ -6,7 +6,7 @@ import DashBoard from "../pages/DashBoard.jsx";
 
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter forceRefresh={true}>
             <Routes>
                 <Route path="/" element={<Home/>} />
                 <Route path="/auth" element={<Auth/>} />
