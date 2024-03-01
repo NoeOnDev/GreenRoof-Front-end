@@ -36,7 +36,11 @@ function AuthForm() {
 
     const emailVerificationApiKey = 'at_31YSS1nYeaG46WNuxbyCdeU34WxxX'; 
     
-
+      // Ejemplo de declarar las rutas como constantes
+      /*
+      const loginRoute = 'http://localhost:3000/login';
+      const registerRoute = 'http://localhost:3000/register';
+      */ 
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
       
