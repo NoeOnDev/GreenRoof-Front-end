@@ -15,7 +15,7 @@ function AuthForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [isSignUpMode, setSignUpMode] = useState(false);
+  const [isSignUpMode, setSignUpMode] = useState(localStorage.getItem('isSignUpMode') === 'true');
   const [recaptchaValue, setRecaptchaValue] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -95,7 +95,6 @@ function AuthForm() {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -161,7 +160,6 @@ function AuthForm() {
     }
   };
 
-
   const handleRecaptchaChange = (value) => {
     setRecaptchaValue(value);
   };
@@ -169,23 +167,30 @@ function AuthForm() {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
+
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
+
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
+
   const toggleMode = () => {
-    setSignUpMode(!isSignUpMode);
+    const newMode = !isSignUpMode;
+    setSignUpMode(newMode);
+    localStorage.setItem('isSignUpMode', newMode);
     setEmail('');
     setUsername('');
     setPassword('');
     setConfirmPassword('');
-    setShowPassword('');
+    setShowPassword(false);
   };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
