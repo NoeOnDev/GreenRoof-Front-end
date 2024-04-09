@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import ReCAPTCHA from "react-google-recaptcha";
-import '../../assets/styles/Auth.css';
-import validator from 'validator';
-import log from '../../assets/img/log.svg';
-import register from '../../assets/img/register.svg';
-import Swal from 'sweetalert2';
-import config from "../../config.jsx";
+import { useNavigate, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-
+import ReCAPTCHA from "react-google-recaptcha";
+import validator from 'validator';
+import Swal from 'sweetalert2';
+import config from "../../config.jsx";
+import log from '../../assets/img/log.svg';
+import register from '../../assets/img/register.svg';
+import '../../assets/styles/Auth.css';
 
 function AuthForm() {
   const [email, setEmail] = useState('');
@@ -36,11 +34,6 @@ function AuthForm() {
 
   const emailVerificationApiKey = 'at_31YSS1nYeaG46WNuxbyCdeU34WxxX';
 
-  // Ejemplo de declarar las rutas como constantes
-  /*
-  const loginRoute = 'http://localhost:3000/login';
-  const registerRoute = 'http://localhost:3000/register';
-  */
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
 
@@ -221,7 +214,7 @@ function AuthForm() {
             </div>
             <Link to="/forgot" className="ya">¿Olvidaste tu contraseña?</Link>
             <div className="captcha">
-              <ReCAPTCHA sitekey={config.REACT_APP_RECAPTCHA_SITEKEY} onChange={handleRecaptchaChange} />
+              <ReCAPTCHA sitekey={config} onChange={handleRecaptchaChange} />
             </div>
 
             <input type="submit" className="btn" value={isLoading ? 'Procesando...' : 'Iniciar Sesión'} disabled={isSubmitting || isLoading} />
