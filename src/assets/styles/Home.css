@@ -45,7 +45,7 @@ a {
     text-decoration: none;
 }
 
-.titulos-home{
+.titulos-home {
     font-size: 2.2rem;
 }
 
@@ -103,7 +103,7 @@ header .home-container {
     display: none;
 }
 
-.uil-pagelines{
+.uil-pagelines {
     color: var(--darkThree);
     font-size: 35px;
 }
@@ -238,7 +238,7 @@ header .home-container {
     margin-bottom: 4rem;
 }
 
-.big-title2{
+.big-title2 {
     font-size: 1.2rem;
     color: var(--darkOne);
     text-transform: capitalize;
@@ -326,6 +326,7 @@ header .home-container {
     0% {
         clip-path: circle(30% at -25% -25%);
     }
+
     100% {
         clip-path: circle(150% at 0 0);
     }
@@ -430,7 +431,7 @@ header .home-container {
         padding: 0 1.5rem;
     }
 
-    .titulos-home{
+    .titulos-home {
         font-size: 1.5rem;
     }
 
