@@ -8,10 +8,10 @@ function App() {
     return (
         <BrowserRouter forceRefresh={true}>
             <Routes>
-                <Route path="/" element={<Home/>} />
-                <Route path="/auth" element={<Auth/>} />
-                <Route path="/forgot" element={<ForgotPassword/>} />
-                <Route path="/dashboard" element={<DashBoard/>} />
+                <Route path="/" element={<Home />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/forgot" element={<ForgotPassword />} />
+                <Route path="/dashboard" element={<DashBoard />} />
             </Routes>
         </BrowserRouter>
     );
