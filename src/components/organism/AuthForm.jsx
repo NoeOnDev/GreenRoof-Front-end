@@ -32,7 +32,8 @@ function AuthForm() {
     Swal.fire('Advertencia', mensaje, 'warning');
   };
 
-  const emailVerificationApiKey = 'at_31YSS1nYeaG46WNuxbyCdeU34WxxX';
+  const emailVerificationApiKey = config.REACT_APP_API_KEY;
+  const sitiKey = config.REACT_APP_RECAPTCHA_SITEKEY;
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
@@ -214,7 +215,7 @@ function AuthForm() {
             </div>
             <Link to="/forgot" className="ya">¿Olvidaste tu contraseña?</Link>
             <div className="captcha">
-              <ReCAPTCHA sitekey={config} onChange={handleRecaptchaChange} />
+              <ReCAPTCHA sitekey={sitiKey} onChange={handleRecaptchaChange} />
             </div>
 
             <input type="submit" className="btn" value={isLoading ? 'Procesando...' : 'Iniciar Sesión'} disabled={isSubmitting || isLoading} />
