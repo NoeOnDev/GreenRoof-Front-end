@@ -53,7 +53,7 @@ const HomeForm = () => {
                                         Ventajas
                                     </button>
                                 </li>
-                                <li> 
+                                <li>
                                     <button><Link to="/auth" className="home-btn">
                                         Iniciar sesión
                                     </Link></button>
@@ -69,7 +69,6 @@ const HomeForm = () => {
                     </div>
                 </header>
 
-                {/* Sección de Inicio */}
                 {section === 'inicio' && (
                     <div className="showcase-area">
                         <div className="home-container">
@@ -93,7 +92,6 @@ const HomeForm = () => {
                     </div>
                 )}
 
-                {/* Sección de Características */}
                 {section === 'caracteristicas' && (
                     <div className="showcase-area">
                         <div className="home-container">
@@ -109,7 +107,6 @@ const HomeForm = () => {
                     </div>
                 )}
 
-                {/* Sección de Beneficios (Aún por agregar) */}
                 {section === 'ventajas' && (
                     <div className="showcase-area">
                         <div className="home-container">
