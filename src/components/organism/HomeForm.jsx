@@ -7,12 +7,21 @@ import person2 from '../../assets/img/person2.svg';
 import person4 from '../../assets/img/person4.svg';
 
 const HomeForm = () => {
-    const [dark, setDark] = useState(false);
-    const [section, setSection] = useState('inicio');
+    const [dark, setDark] = useState(() => {
+        const storedDark = localStorage.getItem('dark');
+        return storedDark !== null ? JSON.parse(storedDark) : false;
+    });
+    const [section, setSection] = useState(() => {
+        const storedSection = localStorage.getItem('section');
+        return storedSection !== null ? storedSection : 'inicio';
+    });
 
     const toggleAnimation = () => {
-        setDark((prevDark) => !prevDark);
-        setAnimating(true);
+        setDark((prevDark) => {
+            const newDark = !prevDark;
+            localStorage.setItem('dark', JSON.stringify(newDark));
+            return newDark;
+        });
     };
 
     const handleHamburgerClick = () => {
@@ -21,6 +30,7 @@ const HomeForm = () => {
     };
 
     const handleSectionChange = (newSection) => {
+        localStorage.setItem('section', newSection);
         setSection(newSection);
     };
 
