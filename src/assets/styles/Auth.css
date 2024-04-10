@@ -67,9 +67,6 @@ input {
     }
 }
 
-
-/*Containers*/
-
 .container {
     position: relative;
     width: 100%;
@@ -154,10 +151,6 @@ form.sign-in-form {
     font-size: 1.1rem;
 
 }
-
-
-
-
 
 .input-field i {
     text-align: center;
@@ -330,7 +323,9 @@ form.sign-in-form {
     transform: translateX(800px);
 }
 
-/* ANIMATION */
+.parrafo {
+    color: white;
+}
 
 .container.sign-up-mode:before {
     transform: translate(100%, -50%);
@@ -520,8 +515,4 @@ form.sign-in-form {
         font-size: 0.7rem;
         margin-left: 6rem;
     }
-}
-
-.parrafo {
-    color: white;
 }
